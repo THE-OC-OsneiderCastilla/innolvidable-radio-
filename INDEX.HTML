@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>INNOLVIDABLE RADIO</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #000;
+      color: white;
+      text-align: center;
+      background-image: url('bg-disco.gif');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    #logo {
+      width: 200px;
+      margin-top: 20px;
+    }
+    #now-playing {
+      font-size: 1.5rem;
+      margin: 20px 0;
+    }
+    #album-cover {
+      width: 300px;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    }
+    audio {
+      margin-top: 20px;
+      width: 80%;
+    }
+  </style>
+</head>
+<body>
+  <img id="logo" src="logo.png" alt="Logo INNOLVIDABLE RADIO" />
+  <h1>INNOLVIDABLE RADIO</h1>
+  <p id="now-playing">🎵 Cargando canción...</p>
+  <img id="album-cover" src="extraterrestre_dance.gif" alt="Carátula" />
+  <audio controls autoplay>
+    <source src="https://stream.zeno.fm/hauntr6geoevv" type="audio/mpeg">
+    Tu navegador no soporta audio HTML5.
+  </audio>
+
+  <script>
+    async function cargarMetadata() {
+      try {
+        const response = await fetch("metadata.txt?_=" + new Date().getTime());
+        const texto = await response.text();
+        document.getElementById("now-playing").textContent = "🎵 Ahora suena: " + texto;
+
+        const clave = texto.toLowerCase();
+        const imagenes = {
+          "bad bunny": "bunny_baila.gif",
+          "shakira": "shakira_dance.gif",
+          "default": "extraterrestre_dance.gif"
+        };
+
+        let encontrada = Object.keys(imagenes).find(k => clave.includes(k));
+        document.getElementById("album-cover").src = imagenes[encontrada] || imagenes["default"];
+      } catch (e) {
+        console.error("Error al cargar metadatos", e);
+      }
+    }
+
+    cargarMetadata();
+    setInterval(cargarMetadata, 10000); // Actualiza cada 10 segundos
+  </script>
+</body>
+</html>
