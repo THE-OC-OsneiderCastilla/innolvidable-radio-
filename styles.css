@@ -1,0 +1,17 @@
+
+body {
+  background: #cceeff;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+.logo {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+.slogan {
+  font-size: 1.2em;
+  color: #005577;
+}
